@@ -1,0 +1,322 @@
+https://dev.mysql.com/doc/refman/5.7/en/storage-engines.html
+
+
+https://dev.mysql.com/doc/refman/5.7/en/data-types.html
+
+https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-data-manipulation.html
+
+
+https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-transactions.html
+
+https://dev.mysql.com/doc/refman/5.7/en/union.html
+
+
+
+Here the explanational (dummy) SQL:
+
+SELECT
+DATE_FORMAT(DATE_ADD(TIMESTAMP, INTERVAL 45 MINUTE) , '%Y-%m-%d %H:00:00') AS TIMESTAMP
+, ROUND(SUM(E_Z_EVU), 3) AS E_Z_EVU
+FROM (
+SELECT '2012-09-01 08:00:00' AS TIMESTAMP, 0.0317 AS E_Z_EVU
+UNION
+SELECT '2012-09-01 08:00:00' AS TIMESTAMP, 0.0316 AS E_Z_EVU
+UNION
+SELECT '2012-09-01 08:15:00' AS TIMESTAMP, 0.0321 AS E_Z_EVU
+UNION
+SELECT '2012-09-01 08:15:00' AS TIMESTAMP, 0.0319 AS E_Z_EVU
+UNION
+SELECT '2012-09-01 08:30:00' AS TIMESTAMP, 0.0320 AS E_Z_EVU
+UNION
+SELECT '2012-09-01 08:30:00' AS TIMESTAMP, 0.0319 AS E_Z_EVU
+UNION
+SELECT '2012-09-01 08:45:00' AS TIMESTAMP, 0.0323 AS E_Z_EVU
+UNION
+SELECT '2012-09-01 08:40:00' AS TIMESTAMP, 0.0322 AS E_Z_EVU
+) A
+UNION
+SELECT TIMESTAMP, E_Z_EVU
+FROM archive_DB.SOME_TABLE
+WHERE TIMESTAMP BETWEEN '2012-08-31 09:00:00' AND '2012-09-01 08:59:59'
+GROUP BY DATE_FORMAT(DATE_ADD(TIMESTAMP, INTERVAL 45 MINUTE), '%Y-%m-%d %H:00:00')
+ORDER BY TIMESTAMP
+
+and here the example output:
++---------------------+---------+
+| TIMESTAMP           | E_Z_EVU |
++---------------------+---------+
+| 2012-08-31 09:00:00 |  0.0044 |
+| 2012-08-31 09:15:00 |  0.0034 |
+| 2012-08-31 10:15:00 |  0.0039 |
+| 2012-08-31 11:15:00 |  0.0181 |
+| 2012-08-31 12:15:00 |    0.04 |
+| 2012-08-31 13:15:00 |  0.0527 |
+| 2012-08-31 14:15:00 |  0.0605 |
+| 2012-08-31 15:15:00 |  0.0566 |
+| 2012-08-31 16:15:00 |  0.0156 |
+| 2012-08-31 17:15:00 |  0.0195 |
+| 2012-08-31 18:15:00 |  0.0112 |
+| 2012-08-31 19:15:00 |   0.001 |
+| 2012-08-31 20:15:00 |       0 |
+| 2012-08-31 21:15:00 |       0 |
+| 2012-08-31 22:15:00 |       0 |
+| 2012-08-31 23:15:00 |       0 |
+| 2012-09-01 08:00:00 |   0.256 |
++---------------------+---------+
+
+
+12.20.1 Aggregate (GROUP BY) Function Descriptions
+This section describes group (aggregate) functions that operate on sets of values.
+
+Table 12.26 Aggregate (GROUP BY) Functions
+
+Name	Description
+AVG()	Return the average value of the argument
+BIT_AND()	Return bitwise AND
+BIT_OR()	Return bitwise OR
+BIT_XOR()	Return bitwise XOR
+COUNT()	Return a count of the number of rows returned
+COUNT(DISTINCT)	Return the count of a number of different values
+GROUP_CONCAT()	Return a concatenated string
+JSON_ARRAYAGG()	Return result set as a single JSON array
+JSON_OBJECTAGG()	Return result set as a single JSON object
+MAX()	Return the maximum value
+MIN()	Return the minimum value
+STD()	Return the population standard deviation
+STDDEV()	Return the population standard deviation
+STDDEV_POP()	Return the population standard deviation
+STDDEV_SAMP()	Return the sample standard deviation
+SUM()	Return the sum
+VAR_POP()	Return the population standard variance
+VAR_SAMP()	Return the sample variance
+VARIANCE()	Return the population standard variance
+
+
+
+https://dev.mysql.com/doc/refman/5.7/en/string-functions.html
+
+
+able 12.7 String Operators
+
+Name	Description
+ASCII()	Return numeric value of left-most character
+BIN()	Return a string containing binary representation of a number
+BIT_LENGTH()	Return length of argument in bits
+CHAR()	Return the character for each integer passed
+CHAR_LENGTH()	Return number of characters in argument
+CHARACTER_LENGTH()	Synonym for CHAR_LENGTH()
+CONCAT()	Return concatenated string
+CONCAT_WS()	Return concatenate with separator
+ELT()	Return string at index number
+EXPORT_SET()	Return a string such that for every bit set in the value bits, you get an on string and for every unset bit, you get an off string
+FIELD()	Index (position) of first argument in subsequent arguments
+FIND_IN_SET()	Index (position) of first argument within second argument
+FORMAT()	Return a number formatted to specified number of decimal places
+FROM_BASE64()	Decode base64 encoded string and return result
+HEX()	Hexadecimal representation of decimal or string value
+INSERT()	Insert substring at specified position up to specified number of characters
+INSTR()	Return the index of the first occurrence of substring
+LCASE()	Synonym for LOWER()
+LEFT()	Return the leftmost number of characters as specified
+LENGTH()	Return the length of a string in bytes
+LIKE	Simple pattern matching
+LOAD_FILE()	Load the named file
+LOCATE()	Return the position of the first occurrence of substring
+LOWER()	Return the argument in lowercase
+LPAD()	Return the string argument, left-padded with the specified string
+LTRIM()	Remove leading spaces
+MAKE_SET()	Return a set of comma-separated strings that have the corresponding bit in bits set
+MATCH	Perform full-text search
+MID()	Return a substring starting from the specified position
+NOT LIKE	Negation of simple pattern matching
+NOT REGEXP	Negation of REGEXP
+OCT()	Return a string containing octal representation of a number
+OCTET_LENGTH()	Synonym for LENGTH()
+ORD()	Return character code for leftmost character of the argument
+POSITION()	Synonym for LOCATE()
+QUOTE()	Escape the argument for use in an SQL statement
+REGEXP	Whether string matches regular expression
+REPEAT()	Repeat a string the specified number of times
+REPLACE()	Replace occurrences of a specified string
+REVERSE()	Reverse the characters in a string
+RIGHT()	Return the specified rightmost number of characters
+RLIKE	Whether string matches regular expression
+RPAD()	Append string the specified number of times
+RTRIM()	Remove trailing spaces
+SOUNDEX()	Return a soundex string
+SOUNDS LIKE	Compare sounds
+SPACE()	Return a string of the specified number of spaces
+STRCMP()	Compare two strings
+SUBSTR()	Return the substring as specified
+SUBSTRING()	Return the substring as specified
+SUBSTRING_INDEX()	Return a substring from a string before the specified number of occurrences of the delimiter
+TO_BASE64()	Return the argument converted to a base-64 string
+TRIM()	Remove leading and trailing spaces
+UCASE()	Synonym for UPPER()
+UNHEX()	Return a string containing hex representation of a number
+UPPER()	Convert to uppercase
+WEIGHT_STRING()	Return the weight string for a string
+
+
+https://dev.mysql.com/doc/refman/5.7/en/control-flow-functions.html
+
+Table 12.6 Flow Control Operators
+
+Name	Description
+CASE	Case operator
+IF()	If/else construct
+IFNULL()	Null if/else construct
+NULLIF()	Return NULL if expr1 = expr2
+
+https://dev.mysql.com/doc/refman/5.7/en/numeric-functions.html
+
+Table 12.10 Numeric Functions and Operators
+
+Name	Description
+ABS()	Return the absolute value
+ACOS()	Return the arc cosine
+ASIN()	Return the arc sine
+ATAN()	Return the arc tangent
+ATAN2(), ATAN()	Return the arc tangent of the two arguments
+CEIL()	Return the smallest integer value not less than the argument
+CEILING()	Return the smallest integer value not less than the argument
+CONV()	Convert numbers between different number bases
+COS()	Return the cosine
+COT()	Return the cotangent
+CRC32()	Compute a cyclic redundancy check value
+DEGREES()	Convert radians to degrees
+DIV	Integer division
+/	Division operator
+EXP()	Raise to the power of
+FLOOR()	Return the largest integer value not greater than the argument
+LN()	Return the natural logarithm of the argument
+LOG()	Return the natural logarithm of the first argument
+LOG10()	Return the base-10 logarithm of the argument
+LOG2()	Return the base-2 logarithm of the argument
+-	Minus operator
+MOD()	Return the remainder
+%, MOD	Modulo operator
+PI()	Return the value of pi
++	Addition operator
+POW()	Return the argument raised to the specified power
+POWER()	Return the argument raised to the specified power
+RADIANS()	Return argument converted to radians
+RAND()	Return a random floating-point value
+ROUND()	Round the argument
+SIGN()	Return the sign of the argument
+SIN()	Return the sine of the argument
+SQRT()	Return the square root of the argument
+TAN()	Return the tangent of the argument
+*	Multiplication operator
+TRUNCATE()	Truncate to specified number of decimal places
+-	Change the sign of the argument
+
+
+
+REVOKE
+    priv_type [(column_list)]
+      [, priv_type [(column_list)]] ...
+    ON [object_type] priv_level
+    FROM user [, user] ...
+
+REVOKE ALL [PRIVILEGES], GRANT OPTION
+    FROM user [, user] ...
+
+REVOKE PROXY ON user
+    FROM user [, user] ...
+
+
+GRANT
+    priv_type [(column_list)]
+      [, priv_type [(column_list)]] ...
+    ON [object_type] priv_level
+    TO user [auth_option] [, user [auth_option]] ...
+    [REQUIRE {NONE | tls_option [[AND] tls_option] ...}]
+    [WITH {GRANT OPTION | resource_option} ...]
+
+GRANT PROXY ON user
+    TO user [, user] ...
+    [WITH GRANT OPTION]
+
+object_type: {
+    TABLE
+  | FUNCTION
+  | PROCEDURE
+}
+
+priv_level: {
+    *
+  | *.*
+  | db_name.*
+  | db_name.tbl_name
+  | tbl_name
+  | db_name.routine_name
+}
+
+user:
+    (see Section 6.2.3, “Specifying Account Names”)
+
+auth_option: {
+    IDENTIFIED BY 'auth_string'
+  | IDENTIFIED WITH auth_plugin
+  | IDENTIFIED WITH auth_plugin BY 'auth_string'
+  | IDENTIFIED WITH auth_plugin AS 'hash_string'
+  | IDENTIFIED BY PASSWORD 'hash_string'
+}
+
+tls_option: {
+    SSL
+  | X509
+  | CIPHER 'cipher'
+  | ISSUER 'issuer'
+  | SUBJECT 'subject'
+}
+
+resource_option: {
+  | MAX_QUERIES_PER_HOUR count
+  | MAX_UPDATES_PER_HOUR count
+  | MAX_CONNECTIONS_PER_HOUR count
+  | MAX_USER_CONNECTIONS count
+
+table_references:
+    escaped_table_reference [, escaped_table_reference] ...
+
+escaped_table_reference:
+    table_reference
+  | { OJ table_reference }
+
+table_reference:
+    table_factor
+  | joined_table
+
+table_factor:
+    tbl_name [PARTITION (partition_names)]
+        [[AS] alias] [index_hint_list]
+  | table_subquery [AS] alias
+  | ( table_references )
+
+joined_table:
+    table_reference [INNER | CROSS] JOIN table_factor [join_specification]
+  | table_reference STRAIGHT_JOIN table_factor
+  | table_reference STRAIGHT_JOIN table_factor ON search_condition
+  | table_reference {LEFT|RIGHT} [OUTER] JOIN table_reference join_specification
+  | table_reference NATURAL [{LEFT|RIGHT} [OUTER]] JOIN table_factor
+
+join_specification:
+    ON search_condition
+  | USING (join_column_list)
+
+join_column_list:
+    column_name [, column_name] ...
+
+index_hint_list:
+    index_hint [, index_hint] ...
+
+index_hint:
+    USE {INDEX|KEY}
+      [FOR {JOIN|ORDER BY|GROUP BY}] ([index_list])
+  | {IGNORE|FORCE} {INDEX|KEY}
+      [FOR {JOIN|ORDER BY|GROUP BY}] (index_list)
+
+index_list:
+    index_name [, index_name] ..
