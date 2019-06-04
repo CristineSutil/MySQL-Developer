@@ -1,0 +1,25 @@
+https://drive.google.com/open?id=16LTDLwj5BJKzbrWfNVYDCOZ172Se7XGg
+
+https://drive.google.com/open?id=0B3fLqCD6cdgQZ3hjRk1JMDRhbEU
+
+INKS DADOS ETL
+
+https://drive.google.com/open?id=0B3fLqCD6cdgQZ3hjRk1JMDRhbEU --> senha udemy
+
+https://drive.google.com/open?id=16LTDLwj5BJKzbrWfNVYDCOZ172Se7XGg --> Sem Senha
+
+BASES ADVENTURE WORKS
+
+Opção 01 - MDF
+
+https://drive.google.com/open?id=1VZzHG2bkC-o6FTnGR0H2qDIhJ_qOjSdC --> BASE DW
+https://drive.google.com/open?id=1H1cqvElI30p8foXKLJU5J8Rn0brpDyB2 --> BASE OLTP
+
+Opção 02
+
+https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-data-file.mdf
+https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-dw-data-file.mdf
+
+TODOS OS ARQUIVOS .BAK DO ADVENTURE WORKS
+
+https://github.com/Microsoft/sql-server-samples/releases/tag/adventureworks
